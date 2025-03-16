@@ -1,57 +1,65 @@
-/* VirtualTour.module.css */
 .virtualTourSection {
-  @apply bg-gradient-to-b from-gray-900 to-gray-800;
-  cursor: auto;
+  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.8), rgba(0, 0, 0, 0.95));
+  min-height: 100vh;
+  padding: 4rem 0;
 }
 
 .imageContainer {
-  @apply relative aspect-video w-full max-w-5xl mx-auto rounded-lg overflow-hidden shadow-2xl;
-  background: rgba(0, 0, 0, 0.2);
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.cellImage {
-  @apply object-cover transition-transform duration-700;
-}
-
-.imageContainer:hover .cellImage {
+.imageContainer:hover {
   transform: scale(1.02);
 }
 
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.imageContainer:hover img {
+  transform: scale(1.1);
+}
+
+blockquote {
+  position: relative;
+  font-style: italic;
+  padding: 2rem;
+  margin: 2rem 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -1rem;
+  left: 1rem;
+  font-size: 4rem;
+  color: rgb(var(--accent-rgb));
+  opacity: 0.5;
+}
+
 .caption {
-  @apply absolute bottom-0 left-0 right-0 p-6 bg-black/75 text-white;
-  backdrop-filter: blur(8px);
-}
-
-.caption p {
-  @apply text-lg leading-relaxed mb-2;
-}
-
-.credit {
-  @apply text-sm text-gray-400;
-}
-
-.quote {
-  @apply text-2xl text-gray-300 italic max-w-4xl mx-auto leading-relaxed;
-}
-
-.quoteAuthor {
-  @apply block mt-4 text-lg text-accent not-italic;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 @media (max-width: 768px) {
-  .caption {
-    @apply p-4;
+  .virtualTourSection {
+    padding: 2rem 1rem;
   }
 
-  .caption p {
-    @apply text-base;
-  }
-
-  .quote {
-    @apply text-xl;
-  }
-
-  .quoteAuthor {
-    @apply text-base;
+  blockquote {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
   }
 }
