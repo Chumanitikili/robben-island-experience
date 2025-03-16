@@ -4,55 +4,8 @@ import { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-interface TimelineEvent {
-  year: number;
-  title: string;
-  description: string;
-}
-
-const timelineEvents: TimelineEvent[] = [
-  {
-    year: 1488,
-    title: "First European Contact",
-    description: "Portuguese explorer Bartolomeu Dias first recorded the existence of the island."
-  },
-  {
-    year: 1652,
-    title: "Dutch Settlement",
-    description: "The Dutch began using Robben Island as a refreshment station and for sheep farming."
-  },
-  {
-    year: 1846,
-    title: "Hospital Establishment",
-    description: "The island was converted into a hospital for people with leprosy, mental illness, and the chronically sick."
-  },
-  {
-    year: 1961,
-    title: "Prison Era Begins",
-    description: "The island was converted into a maximum security prison for political prisoners."
-  },
-  {
-    year: 1964,
-    title: "Mandela's Imprisonment",
-    description: "Nelson Mandela arrived on Robben Island, where he would spend 18 of his 27 years in prison."
-  },
-  {
-    year: 1991,
-    title: "Prison Closure",
-    description: "All political prisoners were released from Robben Island as apartheid began to end."
-  },
-  {
-    year: 1999,
-    title: "UNESCO World Heritage Site",
-    description: "Robben Island was declared a UNESCO World Heritage Site."
-  },
-  {
-    year: 2024,
-    title: "Modern Museum",
-    description: "Today, the island stands as a powerful symbol of the triumph of democracy over oppression."
-  }
-];
+import Image from 'next/image';
+import { timelineEvents } from './timelineData';
 
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -104,10 +57,32 @@ export default function Timeline() {
             }`}
           >
             <div className="w-1/2 p-6">
-              <div className={`text-right ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+              <div className={`${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
                 <span className="text-accent text-5xl font-bold">{event.year}</span>
                 <h3 className="text-2xl font-bold mt-2">{event.title}</h3>
                 <p className="mt-2 text-gray-300">{event.description}</p>
+                <div className="mt-6 relative aspect-video w-full overflow-hidden rounded-lg">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={event.image}
+                      alt={event.imageAlt}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    {event.imageCredit && (
+                      <div className="absolute bottom-0 right-0 bg-black/50 text-white text-xs px-2 py-1">
+                        Credit: {event.imageCredit}
+                      </div>
+                    )}
+                  </motion.div>
+                </div>
               </div>
             </div>
 
