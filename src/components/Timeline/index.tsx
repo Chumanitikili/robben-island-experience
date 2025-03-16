@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -8,12 +8,16 @@ import Image from 'next/image';
 import { timelineEvents } from './timelineData';
 import styles from './Timeline.module.css';
 
+const fallbackImage = '/images/timeline/placeholder.jpg';
+
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
+
+  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -37,6 +41,10 @@ export default function Timeline() {
   }, []);
 
   const progressLine = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const handleImageError = (year: number) => {
+    setImageErrors(prev => ({ ...prev, [year]: true }));
+  };
 
   return (
     <div ref={containerRef} className={styles.timelineContainer}>
@@ -70,14 +78,23 @@ export default function Timeline() {
                     viewport={{ once: true }}
                     className="relative w-full h-full"
                   >
-                    <Image
-                      src={event.image}
-                      alt={event.imageAlt}
-                      fill
-                      className={styles.timelineImage}
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                    {event.imageCredit && (
+                    {!imageErrors[event.year] ? (
+                      <Image
+                        src={event.image}
+                        alt={event.imageAlt}
+                        fill
+                        className={styles.timelineImage}
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        onError={() => handleImageError(event.year)}
+                      />
+                    ) : (
+                      <div className={`${styles.timelineImage} ${styles.placeholderImage}`}>
+                        <div className="absolute inset-0 flex items-center justify-center bg-gray-800 text-gray-400 text-sm text-center p-4">
+                          <p>Historical image of {event.imageAlt}</p>
+                        </div>
+                      </div>
+                    )}
+                    {event.imageCredit && !imageErrors[event.year] && (
                       <div className={styles.timelineImageCredit}>
                         Credit: {event.imageCredit}
                       </div>
