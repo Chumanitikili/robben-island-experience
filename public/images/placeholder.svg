@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="600" fill="#2a2a2a"/>
+    <text x="400" y="300" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">
+        Image Loading...
+    </text>
+    <rect x="300" y="320" width="200" height="20" fill="#333"/>
+    <rect x="300" y="320" width="200" height="20" fill="#666">
+        <animate attributeName="width" values="0;200" dur="2s" repeatCount="indefinite"/>
+    </rect>
+</svg>
