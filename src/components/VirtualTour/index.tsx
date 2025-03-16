@@ -8,19 +8,19 @@ const VirtualTour: React.FC = () => {
 
   const cellImages = [
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/1/14/Nelson_Mandela%27s_prison_cell.jpg",
+      src: "/images/mandela/cell-interior.jpg",
       alt: "Nelson Mandela's prison cell on Robben Island - Interior view",
       caption: "The sparse interior of Nelson Mandela's cell, measuring just 8 feet by 7 feet",
       credit: "South African Tourism Board"
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Robben_Island_Prison_Cell.jpg/1280px-Robben_Island_Prison_Cell.jpg",
+      src: "/images/mandela/cell-block.jpg",
       alt: "Wider view of the prison cell block on Robben Island",
       caption: "The B-Section corridor where political prisoners were held",
       credit: "UNESCO World Heritage Site"
     },
     {
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Nelson_Mandela%27s_Prison_Cell_Door.jpg/800px-Nelson_Mandela%27s_Prison_Cell_Door.jpg",
+      src: "/images/mandela/cell-door.jpg",
       alt: "The door of Nelson Mandela's prison cell",
       caption: "The heavy metal door of cell number 466/64",
       credit: "Robben Island Museum"
@@ -70,7 +70,7 @@ const VirtualTour: React.FC = () => {
                     fill
                     className="object-cover transition-transform duration-300 hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    loading="lazy"
+                    priority={index === 0}
                   />
                 </div>
                 <p className="mt-2 text-sm text-gray-300">{image.caption}</p>
@@ -94,6 +94,7 @@ const VirtualTour: React.FC = () => {
               height={800}
               className="object-contain"
               onClick={(e) => e.stopPropagation()}
+              priority
             />
             <button
               className="absolute top-4 right-4 text-white text-xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
