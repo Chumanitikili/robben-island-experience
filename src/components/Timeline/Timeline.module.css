@@ -1,0 +1,88 @@
+/* Timeline.module.css */
+.timelineContainer {
+  @apply relative py-20 bg-gradient-to-b from-gray-900 to-gray-800;
+}
+
+.timelineLine {
+  @apply absolute left-1/2 top-0 bottom-0 w-0.5 bg-accent/30;
+  transform: translateX(-50%);
+}
+
+.timelineProgress {
+  @apply absolute top-0 w-full bg-accent;
+  transition: height 0.2s ease;
+}
+
+.timelineEvent {
+  @apply relative flex items-center gap-8 mb-20;
+}
+
+.timelineEventContent {
+  @apply w-1/2 p-6 backdrop-blur-sm bg-gray-900/50 rounded-lg shadow-xl;
+  transition: transform 0.3s ease;
+}
+
+.timelineEventContent:hover {
+  transform: translateY(-5px);
+}
+
+.timelineYear {
+  @apply text-accent text-5xl font-bold;
+  text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
+}
+
+.timelineTitle {
+  @apply text-2xl font-bold mt-2 text-white;
+}
+
+.timelineDescription {
+  @apply mt-2 text-gray-300 leading-relaxed;
+}
+
+.timelineImageContainer {
+  @apply mt-6 relative aspect-video w-full overflow-hidden rounded-lg shadow-2xl;
+}
+
+.timelineImage {
+  @apply object-cover transition-transform duration-500;
+}
+
+.timelineImageContainer:hover .timelineImage {
+  transform: scale(1.05);
+}
+
+.timelineImageCredit {
+  @apply absolute bottom-0 right-0 bg-black/50 text-white text-xs px-2 py-1;
+  backdrop-filter: blur(4px);
+}
+
+.timelineDot {
+  @apply relative w-12 h-12 flex items-center justify-center;
+}
+
+.timelineDotInner {
+  @apply w-4 h-4 bg-accent rounded-full;
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
+}
+
+.timelineDotRing {
+  @apply absolute w-12 h-12 border-2 border-accent rounded-full animate-ping opacity-20;
+}
+
+@media (max-width: 768px) {
+  .timelineEvent {
+    @apply flex-col gap-4;
+  }
+
+  .timelineEventContent {
+    @apply w-full;
+  }
+
+  .timelineLine {
+    @apply left-6;
+  }
+
+  .timelineDot {
+    @apply self-start ml-0;
+  }
+}
