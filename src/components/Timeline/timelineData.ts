@@ -11,65 +11,81 @@ export const timelineEvents: TimelineEvent[] = [
   {
     year: 1488,
     title: "First European Contact",
-    description: "Portuguese explorer Bartolomeu Dias first recorded the existence of the island.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Bartolomeu_Dias_-_Livro_de_Lisuarte_de_Abreu_%281558%29.png/800px-Bartolomeu_Dias_-_Livro_de_Lisuarte_de_Abreu_%281558%29.png",
-    imageAlt: "Historical illustration of Bartolomeu Dias from Livro de Lisuarte de Abreu (1558)",
-    imageCredit: "Wikimedia Commons"
+    description: "Bartolomeu Dias becomes the first known European to sight the island.",
+    image: "/images/timeline/1488-bartolomeu-dias.jpg",
+    imageAlt: "Historical illustration of Bartolomeu Dias's ship near Robben Island",
+    imageCredit: "Historical Archives"
   },
   {
     year: 1652,
     title: "Dutch Settlement",
-    description: "The Dutch began using Robben Island as a refreshment station and for sheep farming.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/AMH-6634-KB_View_of_Table_Bay.jpg/1280px-AMH-6634-KB_View_of_Table_Bay.jpg",
-    imageAlt: "17th century Dutch painting of Table Bay with Robben Island visible",
-    imageCredit: "National Archives of the Netherlands"
+    description: "Jan van Riebeeck establishes the island as a refreshment station for the Dutch East India Company.",
+    image: "/images/timeline/1652-dutch-settlement.jpg",
+    imageAlt: "Early Dutch settlement on Robben Island",
+    imageCredit: "Cape Archives"
+  },
+  {
+    year: 1671,
+    title: "Prison Establishment",
+    description: "The island begins its long history as a place of banishment and imprisonment.",
+    image: "/images/timeline/1671-prison.jpg",
+    imageAlt: "Early prison structures on Robben Island",
+    imageCredit: "South African Heritage"
   },
   {
     year: 1846,
-    title: "Hospital Establishment",
-    description: "The island was converted into a hospital for people with leprosy, mental illness, and the chronically sick.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Robben_Island_Leper_Church.jpg/1280px-Robben_Island_Leper_Church.jpg",
-    imageAlt: "Historical photograph of the Robben Island Leper Church",
-    imageCredit: "Wikimedia Commons"
+    title: "Lighthouse Construction",
+    description: "Construction of the island's lighthouse to aid maritime navigation.",
+    image: "/images/timeline/1846-lighthouse.jpg",
+    imageAlt: "Historic Robben Island lighthouse",
+    imageCredit: "Maritime Archives"
   },
   {
     year: 1961,
-    title: "Prison Era Begins",
-    description: "The island was converted into a maximum security prison for political prisoners.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Robben_Island_Prison.jpg/1280px-Robben_Island_Prison.jpg",
-    imageAlt: "Robben Island Maximum Security Prison in the 1960s",
-    imageCredit: "South African History Archive"
+    title: "Maximum Security Prison",
+    description: "The island is converted into a maximum security prison for political prisoners.",
+    image: "/images/timeline/1961-maximum-security.jpg",
+    imageAlt: "Maximum security prison buildings",
+    imageCredit: "Apartheid Museum"
   },
   {
     year: 1964,
     title: "Mandela's Imprisonment",
-    description: "Nelson Mandela arrived on Robben Island, where he would spend 18 of his 27 years in prison.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Prison_cell_of_Nelson_Mandela_on_Robben_Island.jpg/1280px-Prison_cell_of_Nelson_Mandela_on_Robben_Island.jpg",
+    description: "Nelson Mandela begins his 18-year imprisonment on Robben Island.",
+    image: "/images/timeline/1964-mandela.jpg",
     imageAlt: "Nelson Mandela's prison cell on Robben Island",
-    imageCredit: "Wikimedia Commons"
+    imageCredit: "Robben Island Museum"
   },
   {
     year: 1991,
     title: "Prison Closure",
-    description: "All political prisoners were released from Robben Island as apartheid began to end.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Nelson_Mandela_1991.jpg/800px-Nelson_Mandela_1991.jpg",
-    imageAlt: "Nelson Mandela in 1991 after his release",
-    imageCredit: "Dutch National Archives"
+    description: "The prison is closed as South Africa begins its transition to democracy.",
+    image: "/images/timeline/1991-closure.jpg",
+    imageAlt: "Last prisoners leaving Robben Island",
+    imageCredit: "South African Archives"
+  },
+  {
+    year: 1997,
+    title: "Museum Opening",
+    description: "Robben Island becomes a museum and national heritage site.",
+    image: "/images/timeline/1997-museum.jpg",
+    imageAlt: "Robben Island Museum opening ceremony",
+    imageCredit: "Museum Archives"
   },
   {
     year: 1999,
     title: "UNESCO World Heritage Site",
-    description: "Robben Island was declared a UNESCO World Heritage Site.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Robben_Island_World_Heritage_Site.jpg/1280px-Robben_Island_World_Heritage_Site.jpg",
-    imageAlt: "Robben Island UNESCO World Heritage Site plaque",
+    description: "The island is declared a UNESCO World Heritage Site.",
+    image: "/images/timeline/1999-unesco.jpg",
+    imageAlt: "UNESCO World Heritage Site declaration ceremony",
     imageCredit: "UNESCO"
   },
   {
     year: 2024,
-    title: "Modern Museum",
-    description: "Today, the island stands as a powerful symbol of the triumph of democracy over oppression.",
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Robben_Island_Tour.jpg/1280px-Robben_Island_Tour.jpg",
-    imageAlt: "Modern-day Robben Island Museum tour",
+    title: "Modern Heritage",
+    description: "Robben Island continues to stand as a symbol of freedom and democracy.",
+    image: "/images/timeline/2024-heritage.jpg",
+    imageAlt: "Modern-day aerial view of Robben Island",
     imageCredit: "Robben Island Museum"
   }
 ];
