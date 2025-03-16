@@ -1,71 +1,111 @@
-'use client';
-
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import styles from './VirtualTour.module.css';
 
-export default function VirtualTour() {
+const VirtualTour: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const cellImages = [
+    {
+      src: "https://upload.wikimedia.org/wikipedia/commons/1/14/Nelson_Mandela%27s_prison_cell.jpg",
+      alt: "Nelson Mandela's prison cell on Robben Island - Interior view",
+      caption: "The sparse interior of Nelson Mandela's cell, measuring just 8 feet by 7 feet",
+      credit: "South African Tourism Board"
+    },
+    {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Robben_Island_Prison_Cell.jpg/1280px-Robben_Island_Prison_Cell.jpg",
+      alt: "Wider view of the prison cell block on Robben Island",
+      caption: "The B-Section corridor where political prisoners were held",
+      credit: "UNESCO World Heritage Site"
+    },
+    {
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Nelson_Mandela%27s_Prison_Cell_Door.jpg/800px-Nelson_Mandela%27s_Prison_Cell_Door.jpg",
+      alt: "The door of Nelson Mandela's prison cell",
+      caption: "The heavy metal door of cell number 466/64",
+      credit: "Robben Island Museum"
+    }
+  ];
+
   return (
     <section className={styles.virtualTourSection}>
-      <div className="max-w-7xl mx-auto px-4 py-20">
+      <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h2 className="text-4xl font-bold text-center mb-8">
             Nelson Mandela's Cell
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Cell number 5, where Nelson Mandela spent 18 of his 27 years in prison, 
-            has become a powerful symbol of resistance, hope, and the triumph of the 
-            human spirit over adversity.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className={styles.imageContainer}
-        >
-          <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/4/4c/The_President_Dr._A.P.J._Abdul_Kalam_paid_a_visit_to_Robben_Island_and_unlocked_the_Male_Solitary_Cell_No._5%2C_in_which_former_President_of_South_Africa_Dr._Nelson_Mandela_spent_27_years%2C_while_imprisoned%2C_on_September_15%2C_2004.jpg"
-            alt="Nelson Mandela's prison cell (Cell No. 5) on Robben Island"
-            fill
-            className={styles.cellImage}
-            priority
-            quality={100}
-          />
-          <div className={styles.caption}>
+          
+          <div className="prose prose-lg text-gray-200 max-w-3xl mx-auto mb-12">
             <p>
-              Nelson Mandela's cell on Robben Island, where he spent 18 years of his imprisonment.
-              The small space contained only a bucket toilet, a small table, and a bed on the floor.
+              Cell number 466/64 was Nelson Mandela's home for 18 of his 27 years in prison. 
+              The tiny cell, measuring just 8 feet by 7 feet (2.4m x 2.1m), contained only a 
+              bucket toilet, a small table, and a floor mat for sleeping.
             </p>
-            <span className={styles.credit}>
-              Credit: Government of India Archives
-            </span>
+            
+            <blockquote className="text-xl italic border-l-4 border-accent pl-4 my-8">
+              "I could walk the length of my cell in three paces. When I lay down, I could feel 
+              the wall with my feet and my head grazed the concrete at the other side."
+              <footer className="text-sm mt-2">— Nelson Mandela</footer>
+            </blockquote>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {cellImages.map((image, index) => (
+              <motion.div
+                key={index}
+                className={styles.imageContainer}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg cursor-pointer"
+                     onClick={() => setSelectedImage(image.src)}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading="lazy"
+                  />
+                </div>
+                <p className="mt-2 text-sm text-gray-300">{image.caption}</p>
+                <p className="text-xs text-gray-400">Credit: {image.credit}</p>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mt-12 text-center"
-        >
-          <blockquote className={styles.quote}>
-            "I could walk the length of my cell in three paces. When I lay down, I could feel the wall with my feet and my head grazed the concrete at the other side."
-            <footer className={styles.quoteAuthor}>
-              — Nelson Mandela, Long Walk to Freedom
-            </footer>
-          </blockquote>
-        </motion.div>
       </div>
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl w-full h-auto">
+            <Image
+              src={selectedImage}
+              alt="Enlarged view"
+              width={1200}
+              height={800}
+              className="object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              className="absolute top-4 right-4 text-white text-xl bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center"
+              onClick={() => setSelectedImage(null)}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
-}
+};
+
+export default VirtualTour;
