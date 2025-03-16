@@ -1,0 +1,57 @@
+/* VirtualTour.module.css */
+.virtualTourSection {
+  @apply bg-gradient-to-b from-gray-900 to-gray-800;
+  cursor: auto;
+}
+
+.imageContainer {
+  @apply relative aspect-video w-full max-w-5xl mx-auto rounded-lg overflow-hidden shadow-2xl;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.cellImage {
+  @apply object-cover transition-transform duration-700;
+}
+
+.imageContainer:hover .cellImage {
+  transform: scale(1.02);
+}
+
+.caption {
+  @apply absolute bottom-0 left-0 right-0 p-6 bg-black/75 text-white;
+  backdrop-filter: blur(8px);
+}
+
+.caption p {
+  @apply text-lg leading-relaxed mb-2;
+}
+
+.credit {
+  @apply text-sm text-gray-400;
+}
+
+.quote {
+  @apply text-2xl text-gray-300 italic max-w-4xl mx-auto leading-relaxed;
+}
+
+.quoteAuthor {
+  @apply block mt-4 text-lg text-accent not-italic;
+}
+
+@media (max-width: 768px) {
+  .caption {
+    @apply p-4;
+  }
+
+  .caption p {
+    @apply text-base;
+  }
+
+  .quote {
+    @apply text-xl;
+  }
+
+  .quoteAuthor {
+    @apply text-base;
+  }
+}
