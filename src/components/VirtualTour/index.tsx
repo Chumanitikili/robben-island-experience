@@ -1,126 +1,71 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import * as THREE from 'three';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-const locations = [
-  {
-    id: 1,
-    name: "Prison Cell Block B",
-    description: "Where Nelson Mandela spent 18 years of his imprisonment",
-    position: [0, 0, 5],
-    rotation: [0, 0, 0]
-  },
-  {
-    id: 2,
-    name: "Limestone Quarry",
-    description: "Where prisoners were forced to work in harsh conditions",
-    position: [5, 0, 0],
-    rotation: [0, Math.PI / 2, 0]
-  },
-  {
-    id: 3,
-    name: "Maximum Security Prison",
-    description: "The main prison building that housed political prisoners",
-    position: [-5, 0, 0],
-    rotation: [0, -Math.PI / 2, 0]
-  }
-];
-
-function Scene({ currentLocation }: { currentLocation: number }) {
-  const groupRef = useRef<THREE.Group>(null);
-
-  useFrame(({ clock }) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(clock.getElapsedTime() * 0.1) * 0.1;
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      <mesh position={locations[currentLocation - 1].position}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="#CA0000" />
-      </mesh>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-    </group>
-  );
-}
+import styles from './VirtualTour.module.css';
 
 export default function VirtualTour() {
-  const [currentLocation, setCurrentLocation] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleLocationChange = (locationId: number) => {
-    setIsLoading(true);
-    setCurrentLocation(locationId);
-    setTimeout(() => setIsLoading(false), 1000);
-  };
-
   return (
-    <div className="relative h-[80vh]">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="absolute inset-0"
-      >
-        <Canvas>
-          <PerspectiveCamera makeDefault position={[0, 2, 10]} />
-          <OrbitControls enableZoom={false} />
-          <Scene currentLocation={currentLocation} />
-        </Canvas>
-      </motion.div>
+    <section className={styles.virtualTourSection}>
+      <div className="max-w-7xl mx-auto px-4 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl font-bold text-white mb-4">
+            Nelson Mandela's Cell
+          </h2>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            Cell number 5, where Nelson Mandela spent 18 of his 27 years in prison, 
+            has become a powerful symbol of resistance, hope, and the triumph of the 
+            human spirit over adversity.
+          </p>
+        </motion.div>
 
-      {/* Location Navigation */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4">
-        {locations.map((location) => (
-          <button
-            key={location.id}
-            onClick={() => handleLocationChange(location.id)}
-            className={`px-6 py-3 rounded-full transition-all cursor-hover
-              ${currentLocation === location.id 
-                ? 'bg-accent text-white' 
-                : 'bg-white/10 text-white hover:bg-white/20'
-              }`}
-          >
-            {location.name}
-          </button>
-        ))}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className={styles.imageContainer}
+        >
+          <Image
+            src="https://upload.wikimedia.org/wikipedia/commons/4/4c/The_President_Dr._A.P.J._Abdul_Kalam_paid_a_visit_to_Robben_Island_and_unlocked_the_Male_Solitary_Cell_No._5%2C_in_which_former_President_of_South_Africa_Dr._Nelson_Mandela_spent_27_years%2C_while_imprisoned%2C_on_September_15%2C_2004.jpg"
+            alt="Nelson Mandela's prison cell (Cell No. 5) on Robben Island"
+            fill
+            className={styles.cellImage}
+            priority
+            quality={100}
+          />
+          <div className={styles.caption}>
+            <p>
+              Nelson Mandela's cell on Robben Island, where he spent 18 years of his imprisonment.
+              The small space contained only a bucket toilet, a small table, and a bed on the floor.
+            </p>
+            <span className={styles.credit}>
+              Credit: Government of India Archives
+            </span>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-12 text-center"
+        >
+          <blockquote className={styles.quote}>
+            "I could walk the length of my cell in three paces. When I lay down, I could feel the wall with my feet and my head grazed the concrete at the other side."
+            <footer className={styles.quoteAuthor}>
+              — Nelson Mandela, Long Walk to Freedom
+            </footer>
+          </blockquote>
+        </motion.div>
       </div>
-
-      {/* Location Info */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="absolute top-8 left-8 max-w-md bg-black/50 backdrop-blur-md p-6 rounded-lg"
-      >
-        <h3 className="text-2xl font-bold text-white mb-2">
-          {locations[currentLocation - 1].name}
-        </h3>
-        <p className="text-gray-200">
-          {locations[currentLocation - 1].description}
-        </p>
-      </motion.div>
-
-      {/* Loading Overlay */}
-      <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: isLoading ? 1 : 0 }}
-        className={`absolute inset-0 bg-primary flex items-center justify-center
-          ${isLoading ? 'pointer-events-auto' : 'pointer-events-none'}`}
-      >
-        <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin" />
-      </motion.div>
-    </div>
+    </section>
   );
 }
