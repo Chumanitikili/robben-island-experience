@@ -41,6 +41,7 @@
 
 .timelineImageContainer {
   @apply mt-6 relative aspect-video w-full overflow-hidden rounded-lg shadow-2xl;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .timelineImage {
@@ -69,6 +70,34 @@
   @apply absolute w-12 h-12 border-2 border-accent rounded-full animate-ping opacity-20;
 }
 
+.placeholderImage {
+  @apply relative w-full h-full bg-gray-800 rounded-lg overflow-hidden;
+  min-height: 200px;
+}
+
+.placeholderImage::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900;
+  opacity: 0.5;
+}
+
+.placeholderImage::after {
+  content: '';
+  @apply absolute inset-0;
+  background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.1) 50%, transparent 55%);
+  background-size: 200% 200%;
+  animation: shimmer 2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 @media (max-width: 768px) {
   .timelineEvent {
     @apply flex-col gap-4;
@@ -84,5 +113,9 @@
 
   .timelineDot {
     @apply self-start ml-0;
+  }
+
+  .placeholderImage {
+    min-height: 150px;
   }
 }
