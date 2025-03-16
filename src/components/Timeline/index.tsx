@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import { timelineEvents } from './timelineData';
+import styles from './Timeline.module.css';
 
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,7 +19,7 @@ export default function Timeline() {
     if (typeof window !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
 
-      const events = document.querySelectorAll('.timeline-event');
+      const events = document.querySelectorAll(`.${styles.timelineEvent}`);
       events.forEach((event, index) => {
         gsap.from(event, {
           opacity: 0,
@@ -38,11 +39,11 @@ export default function Timeline() {
   const progressLine = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div ref={containerRef} className="relative py-20">
+    <div ref={containerRef} className={styles.timelineContainer}>
       {/* Timeline line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-accent/30">
+      <div className={styles.timelineLine}>
         <motion.div 
-          className="absolute top-0 w-full bg-accent"
+          className={styles.timelineProgress}
           style={{ height: progressLine }}
         />
       </div>
@@ -52,16 +53,16 @@ export default function Timeline() {
         {timelineEvents.map((event, index) => (
           <div
             key={event.year}
-            className={`timeline-event flex items-center gap-8 mb-20 ${
+            className={`${styles.timelineEvent} ${
               index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
             }`}
           >
-            <div className="w-1/2 p-6">
-              <div className={`${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-                <span className="text-accent text-5xl font-bold">{event.year}</span>
-                <h3 className="text-2xl font-bold mt-2">{event.title}</h3>
-                <p className="mt-2 text-gray-300">{event.description}</p>
-                <div className="mt-6 relative aspect-video w-full overflow-hidden rounded-lg">
+            <div className={styles.timelineEventContent}>
+              <div className={index % 2 === 0 ? 'text-right' : 'text-left'}>
+                <span className={styles.timelineYear}>{event.year}</span>
+                <h3 className={styles.timelineTitle}>{event.title}</h3>
+                <p className={styles.timelineDescription}>{event.description}</p>
+                <div className={styles.timelineImageContainer}>
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -73,11 +74,11 @@ export default function Timeline() {
                       src={event.image}
                       alt={event.imageAlt}
                       fill
-                      className="object-cover"
+                      className={styles.timelineImage}
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                     {event.imageCredit && (
-                      <div className="absolute bottom-0 right-0 bg-black/50 text-white text-xs px-2 py-1">
+                      <div className={styles.timelineImageCredit}>
                         Credit: {event.imageCredit}
                       </div>
                     )}
@@ -86,12 +87,12 @@ export default function Timeline() {
               </div>
             </div>
 
-            <div className="relative w-12 h-12 flex items-center justify-center">
-              <div className="w-4 h-4 bg-accent rounded-full" />
-              <div className="absolute w-12 h-12 border-2 border-accent rounded-full animate-ping opacity-20" />
+            <div className={styles.timelineDot}>
+              <div className={styles.timelineDotInner} />
+              <div className={styles.timelineDotRing} />
             </div>
 
-            <div className="w-1/2 p-6" />
+            <div className={styles.timelineEventContent} style={{ visibility: 'hidden' }} />
           </div>
         ))}
       </div>
