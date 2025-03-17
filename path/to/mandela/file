@@ -1,0 +1,8 @@
+<header>
+    <img src="path/to/hero_image.jpg" alt="Hero Image" class="hero-image" />
+    <h1>Nelson Mandela</h1>
+</header>
+
+<footer>
+    <img src="path/to/footer_image.jpg" alt="Footer Image" class="footer-image" />
+</footer> 
