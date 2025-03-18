@@ -10,8 +10,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 const boxGeometry = new THREE.BoxGeometry(10, 10, 10);
 const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.5, metalness: 0.2 });
 
-// Locations data
-const locations = [
+// Define proper types for locations
+interface Location {
+  id: number;
+  name: string;
+  description: string;
+  position: [number, number, number]; // Explicitly typing as tuple
+  rotation: [number, number, number]; // Explicitly typing as tuple
+  color: string;
+}
+
+// Locations data with proper typing
+const locations: Location[] = [
   {
     id: 1,
     name: "Prison Cell Block B",
@@ -38,9 +48,15 @@ const locations = [
   }
 ];
 
-// Optimized location model with memo to prevent unnecessary rerenders
-function LocationModel({ position, rotation, color }) {
-  const meshRef = useRef(null);
+// Optimized location model with proper typing
+interface LocationModelProps {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  color: string;
+}
+
+function LocationModel({ position, rotation, color }: LocationModelProps) {
+  const meshRef = useRef<THREE.Mesh>(null);
   
   useFrame(({ clock }) => {
     if (meshRef.current) {
@@ -74,9 +90,13 @@ function Ground() {
 }
 
 // Main scene component with performance optimizations
-function Scene({ currentLocation }) {
-  const groupRef = useRef(null);
-  const location = locations.find(loc => loc.id === currentLocation);
+interface SceneProps {
+  currentLocation: number;
+}
+
+function Scene({ currentLocation }: SceneProps) {
+  const groupRef = useRef<THREE.Group>(null);
+  const location = locations.find(loc => loc.id === currentLocation) || locations[0];
   
   useFrame(({ clock }) => {
     if (groupRef.current) {
@@ -140,7 +160,7 @@ export default function VirtualTour() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleLocationChange = (locationId) => {
+  const handleLocationChange = (locationId: number) => {
     if (currentLocation === locationId) return;
     setIsLoading(true);
     setCurrentLocation(locationId);
@@ -186,10 +206,10 @@ export default function VirtualTour() {
             className="p-4"
           >
             <h2 className="text-2xl font-bold mb-2">
-              {locations[currentLocation - 1].name}
+              {locations.find(loc => loc.id === currentLocation)?.name || ''}
             </h2>
             <p className="text-gray-300">
-              {locations[currentLocation - 1].description}
+              {locations.find(loc => loc.id === currentLocation)?.description || ''}
             </p>
           </motion.div>
         </AnimatePresence>
