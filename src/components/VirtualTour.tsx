@@ -10,17 +10,24 @@ import { motion, AnimatePresence } from 'framer-motion';
 const boxGeometry = new THREE.BoxGeometry(10, 10, 10);
 const material = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.5, metalness: 0.2 });
 
-// Define proper types for locations
+// Define proper interfaces for location data
 interface Location {
   id: number;
   name: string;
   description: string;
-  position: [number, number, number]; // Explicitly typing as tuple
-  rotation: [number, number, number]; // Explicitly typing as tuple
+  position: [number, number, number];
+  rotation: [number, number, number];
   color: string;
 }
 
-// Locations data with proper typing
+// Define interface for LocationModel props
+interface LocationModelProps {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  color: string;
+}
+
+// Locations data
 const locations: Location[] = [
   {
     id: 1,
@@ -48,13 +55,7 @@ const locations: Location[] = [
   }
 ];
 
-// Optimized location model with proper typing
-interface LocationModelProps {
-  position: [number, number, number];
-  rotation: [number, number, number];
-  color: string;
-}
-
+// Optimized location model with memo to prevent unnecessary rerenders
 function LocationModel({ position, rotation, color }: LocationModelProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   
@@ -151,8 +152,8 @@ function LoadingSpinner() {
 }
 
 export default function VirtualTour() {
-  const [currentLocation, setCurrentLocation] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
+  const [currentLocation, setCurrentLocation] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     // Reduced loading time for better UX
@@ -206,10 +207,10 @@ export default function VirtualTour() {
             className="p-4"
           >
             <h2 className="text-2xl font-bold mb-2">
-              {locations.find(loc => loc.id === currentLocation)?.name || ''}
+              {locations.find(loc => loc.id === currentLocation)?.name}
             </h2>
             <p className="text-gray-300">
-              {locations.find(loc => loc.id === currentLocation)?.description || ''}
+              {locations.find(loc => loc.id === currentLocation)?.description}
             </p>
           </motion.div>
         </AnimatePresence>
@@ -230,4 +231,4 @@ export default function VirtualTour() {
       </AnimatePresence>
     </div>
   );
-}
+}  
