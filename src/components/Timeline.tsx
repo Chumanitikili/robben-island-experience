@@ -16,6 +16,7 @@ const timelineEvents: TimelineEvent[] = [
     year: 1488,
     title: "First European Contact",
     description: "Portuguese explorer Bartolomeu Dias first recorded the existence of the island."
+    image: "/images/
   },
   {
     year: 1652,
