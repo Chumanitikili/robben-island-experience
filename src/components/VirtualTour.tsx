@@ -55,6 +55,12 @@ const locations: Location[] = [
 ];
 
 // Optimized LocationModel component
+interface LocationModelProps {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  color: string;
+}
+
 function LocationModel({ position, rotation, color }: LocationModelProps) {
   const meshRef = useRef<THREE.Mesh>(null);
 
