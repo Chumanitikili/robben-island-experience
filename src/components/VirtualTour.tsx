@@ -74,6 +74,7 @@ function LocationModel({ position, rotation, color }: LocationModelProps) {
   );
 }
 
+
 // Ground plane component
 function Ground() {
   return (
