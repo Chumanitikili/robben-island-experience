@@ -6,10 +6,6 @@ import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Pre-defined geometry and material for reuse
-const boxGeometry = new THREE.BoxGeometry(10, 10, 10);
-const groundMaterial = new THREE.MeshStandardMaterial({ color: '#3C4142', roughness: 0.8 });
-
 // Define interfaces
 interface Location {
   id: number;
@@ -56,7 +52,7 @@ const locations: Location[] = [
 
 // Optimized LocationModel component
 function LocationModel({ position, rotation, color }: LocationModelProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Mesh>(null!);
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
@@ -69,10 +65,10 @@ function LocationModel({ position, rotation, color }: LocationModelProps) {
       ref={meshRef}
       position={position}
       rotation={rotation}
-      geometry={boxGeometry}
       castShadow
       receiveShadow
     >
+      <boxGeometry args={[10, 10, 10]} />
       <meshStandardMaterial color={color} roughness={0.7} metalness={0.2} />
     </mesh>
   );
@@ -81,9 +77,13 @@ function LocationModel({ position, rotation, color }: LocationModelProps) {
 // Ground plane component
 function Ground() {
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]} receiveShadow>
+    <mesh 
+      rotation={[-Math.PI / 2, 0, 0]} 
+      position={[0, -1, 0]} 
+      receiveShadow
+    >
       <planeGeometry args={[100, 100]} />
-      {groundMaterial}
+      <meshStandardMaterial color="#3C4142" roughness={0.8} />
     </mesh>
   );
 }
@@ -94,7 +94,7 @@ interface SceneProps {
 }
 
 function Scene({ currentLocation }: SceneProps) {
-  const groupRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<THREE.Group>(null!);
   const location = locations.find((loc) => loc.id === currentLocation) || locations[0];
 
   useFrame(({ clock }) => {
@@ -117,7 +117,11 @@ function Scene({ currentLocation }: SceneProps) {
       />
       <directionalLight position={[-10, 10, 5]} intensity={1} castShadow />
       <Ground />
-      <LocationModel position={location.position} rotation={location.rotation} color={location.color} />
+      <LocationModel 
+        position={location.position} 
+        rotation={location.rotation} 
+        color={location.color} 
+      />
       <Environment preset="sunset" />
       <OrbitControls
         enablePan={false}
@@ -158,7 +162,11 @@ export default function VirtualTour() {
   return (
     <div className="relative h-screen w-full bg-gray-900 text-white overflow-hidden">
       <Suspense fallback={<LoadingSpinner />}>
-        <Canvas shadows className="w-full h-full" dpr={[1, 2]}>
+        <Canvas 
+          shadows 
+          className="w-full h-full" 
+          dpr={[1, 2]}
+        >
           <Scene currentLocation={currentLocation} />
         </Canvas>
       </Suspense>
@@ -211,6 +219,9 @@ export default function VirtualTour() {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
     </div>
   );
 }
