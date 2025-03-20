@@ -26,41 +26,7 @@ interface LocationModelProps {
   color: string;
 }
 
-// Locations data
-const locations: Location[] = [
-  {
-    id: 1,
-    name: 'Prison Cell Block B',
-    description: 'Where Nelson Mandela spent 18 years of his imprisonment',
-    position: [0, 0, 5],
-    rotation: [0, 0, 0],
-    color: '#A47551',
-  },
-  {
-    id: 2,
-    name: 'Limestone Quarry',
-    description: 'Where prisoners were forced to work in harsh conditions',
-    position: [5, 0, 0],
-    rotation: [0, Math.PI / 2, 0],
-    color: '#C2B8A3',
-  },
-  {
-    id: 3,
-    name: 'Maximum Security Prison',
-    description: 'The main prison building that housed political prisoners',
-    position: [-5, 0, 0],
-    rotation: [0, -Math.PI / 2, 0],
-    color: '#8B7E74',
-  },
-];
-
 // Optimized LocationModel component
-interface LocationModelProps {
-  position: [number, number, number];
-  rotation: [number, number, number];
-  color: string;
-}
-
 function LocationModel({ position, rotation, color }: LocationModelProps) {
   const meshRef = useRef<THREE.Mesh>(null);
 
@@ -144,6 +110,33 @@ function LoadingSpinner() {
     </div>
   );
 }
+
+const locations: Location[] = [
+  {
+    id: 1,
+    name: 'Prison Cell Block B',
+    description: 'Where Nelson Mandela spent 18 years of his imprisonment',
+    position: [0, 0, 5],
+    rotation: [0, 0, 0],
+    color: '#A47551',
+  },
+  {
+    id: 2,
+    name: 'Limestone Quarry',
+    description: 'Where prisoners were forced to work in harsh conditions',
+    position: [5, 0, 0],
+    rotation: [0, Math.PI / 2, 0],
+    color: '#C2B8A3',
+  },
+  {
+    id: 3,
+    name: 'Maximum Security Prison',
+    description: 'The main prison building that housed political prisoners',
+    position: [-5, 0, 0],
+    rotation: [0, -Math.PI / 2, 0],
+    color: '#8B7E74',
+  },
+];
 
 export default function VirtualTour() {
   const [currentLocation, setCurrentLocation] = useState<number>(1);
